@@ -55,7 +55,7 @@ export const TopHeader: React.FC = () => {
     ['blur(0px) saturate(100%)', 'blur(30px) saturate(180%)']
   );
 
-  // Small centered nav title: reveals as large title collapses past 30px
+  // Small nav title: reveals as large title collapses past 26-48px
   const navTitleOpacity = useTransform(scrollY, [26, 48], [0, 1]);
   const navTitleY = useTransform(scrollY, [26, 48], [4, 0]);
 
@@ -85,18 +85,8 @@ export const TopHeader: React.FC = () => {
           className="absolute inset-0 pointer-events-none border-b-[0.5px] border-transparent"
         />
 
-        {/* Small Centered Nav Title: Absolutely centered, exactly on center line */}
-        <motion.div
-          style={{ opacity: navTitleOpacity, y: navTitleY }}
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
-        >
-          <span className="text-[17px] font-semibold text-white tracking-tight">
-            {getNavTitle()}
-          </span>
-        </motion.div>
-
-        {/* Left: App Logo (40px, align-items: center) */}
-        <div className="w-10 h-10 flex-none flex items-center justify-center pointer-events-auto z-20">
+        {/* Left: App Logo + Title right next to logo with scroll-only reveal animation */}
+        <div className="flex items-center gap-2.5 pointer-events-auto z-20">
           <motion.button
             onClick={() => {
               triggerHaptic('light');
@@ -107,12 +97,22 @@ export const TopHeader: React.FC = () => {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.88 }}
             transition={springBouncy}
-            className="w-10 h-10 rounded-full liquid-glass-base flex items-center justify-center cursor-pointer overflow-hidden p-1 shadow-lg border-[0.5px] border-white/20 hover:border-white/40 transition-colors"
-            title="Aether Cloud — Home"
-            aria-label="Aether Cloud Logo"
+            className="w-10 h-10 rounded-full liquid-glass-base flex items-center justify-center cursor-pointer overflow-hidden p-1 shadow-lg border-[0.5px] border-white/20 hover:border-white/40 transition-colors shrink-0"
+            title="Bytex Cloud — Home"
+            aria-label="Bytex Cloud Logo"
           >
             <AppLogo size={32} />
           </motion.button>
+
+          {/* Title right next to logo: reveals when scrolling down, hides when at top */}
+          <motion.div
+            style={{ opacity: navTitleOpacity, y: navTitleY }}
+            className="flex items-center pointer-events-none select-none"
+          >
+            <span className="text-[17px] font-semibold text-white tracking-tight">
+              {getNavTitle()}
+            </span>
+          </motion.div>
         </div>
 
         {/* Right Action Icons: Search 40px, + 40px, Avatar 40px, Gap 8px (Same vertical centerline) */}

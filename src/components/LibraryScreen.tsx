@@ -19,6 +19,8 @@ import {
   Package,
   Edit2,
   FolderInput,
+  Image as ImageIcon,
+  Film,
 } from 'lucide-react';
 import { useCloud } from '../context/CloudContext';
 import { useScrollContainer } from '../context/ScrollContext';
@@ -80,6 +82,34 @@ export const LibraryScreen: React.FC = () => {
   // Smart Folders definitions according to user spec
   const smartFolders: SmartFolderDef[] = [
     {
+      id: 'smart-photos',
+      name: 'Photos',
+      icon: ImageIcon,
+      filterFn: (f) =>
+        !f.is_vault &&
+        !f.is_deleted &&
+        (f.mime_type.startsWith('image/') ||
+          ['jpg', 'jpeg', 'png', 'webp', 'heic', 'gif', 'svg'].includes(
+            f.extension.toLowerCase()
+          )),
+    },
+    {
+      id: 'smart-videos',
+      name: 'Videos',
+      icon: Film,
+      filterFn: (f) =>
+        !f.is_vault &&
+        !f.is_deleted &&
+        (f.mime_type.startsWith('video/') ||
+          ['mp4', 'mov', 'webm', 'mkv', 'avi'].includes(f.extension.toLowerCase())),
+    },
+    {
+      id: 'smart-audio',
+      name: 'Audio',
+      icon: Music,
+      filterFn: (f) => !f.is_vault && !f.is_deleted && f.mime_type.startsWith('audio/'),
+    },
+    {
       id: 'smart-docs',
       name: 'Documents',
       icon: FileText,
@@ -104,12 +134,6 @@ export const LibraryScreen: React.FC = () => {
       name: 'APK Packages',
       icon: Package,
       filterFn: (f) => !f.is_vault && !f.is_deleted && f.extension === 'apk',
-    },
-    {
-      id: 'smart-audio',
-      name: 'Audio',
-      icon: Music,
-      filterFn: (f) => !f.is_vault && !f.is_deleted && f.mime_type.startsWith('audio/'),
     },
     {
       id: 'smart-downloads',
@@ -138,9 +162,10 @@ export const LibraryScreen: React.FC = () => {
   ];
 
   const getFileIcon = (file: CloudFile) => {
-    if (file.mime_type.startsWith('video/')) return <FileText className="w-5 h-5 text-[#A1A1A1]" />;
-    if (file.extension === 'zip' || file.extension === 'rar') return <FileArchive className="w-5 h-5 text-[#A1A1A1]" />;
-    if (file.mime_type.startsWith('audio/')) return <Music className="w-5 h-5 text-[#A1A1A1]" />;
+    if (file.mime_type.startsWith('video/')) return <Film className="w-5 h-5 text-sky-400" />;
+    if (file.mime_type.startsWith('image/')) return <ImageIcon className="w-5 h-5 text-rose-400" />;
+    if (file.extension === 'zip' || file.extension === 'rar') return <FileArchive className="w-5 h-5 text-amber-400" />;
+    if (file.mime_type.startsWith('audio/')) return <Music className="w-5 h-5 text-purple-400" />;
     return <FileText className="w-5 h-5 text-[#A1A1A1]" />;
   };
 
@@ -458,8 +483,16 @@ export const LibraryScreen: React.FC = () => {
                       className="h-[60px] px-4 flex items-center justify-between hover:bg-[#1C1C1E] transition-colors cursor-pointer"
                     >
                       <div className="flex items-center gap-3.5 min-w-0">
-                        <div className="w-10 h-10 rounded-[10px] bg-[#1C1C1E] flex items-center justify-center shrink-0">
-                          {getFileIcon(file)}
+                        <div className="w-10 h-10 rounded-[10px] bg-[#1C1C1E] flex items-center justify-center shrink-0 overflow-hidden">
+                          {file.thumbnail_url ? (
+                            <img
+                              src={file.thumbnail_url}
+                              alt={file.filename}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            getFileIcon(file)
+                          )}
                         </div>
                         <div className="min-w-0">
                           <p className="text-[15px] font-medium text-white truncate leading-tight">
