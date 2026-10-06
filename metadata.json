@@ -1,0 +1,8 @@
+{
+  "name": "Aether Cloud — Personal Cloud & Private Vault",
+  "description": "Fluid, private personal cloud storage, media gallery, and secure vault with Hugging Face Dataset backend integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

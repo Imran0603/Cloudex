@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #000000;
+  --surface: #141414;
+  --surface-2: #1C1C1E;
+  --text: #ffffff;
+  --text-2: #A1A1A1;
+  --text-3: #666666;
+  --blue: #3B82F6;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --font-system: -apple-system, "SF Pro Text", "SF Pro Display", Inter, Roboto, system-ui, sans-serif;
+}
+
+@layer base {
+  html, body {
+    font-family: var(--font-system);
+    background-color: var(--bg);
+    color: var(--text);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Real Liquid Glass styling - High-definition Apple iOS Frosted Glass */
+.liquid-glass,
+.liquid-glass-base {
+  background: rgba(22, 22, 26, 0.76);
+  backdrop-filter: blur(32px) saturate(190%) contrast(105%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%) contrast(105%);
+  border: 0.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.liquid-glass-base::before,
+.liquid-glass-modal::before,
+.liquid-glass-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 45%);
+  pointer-events: none;
+}
+
+/* Modals (Vault, Upload, Share, Duplicate, Confirmations) */
+.liquid-glass-modal {
+  background: rgba(18, 18, 22, 0.84);
+  backdrop-filter: blur(40px) saturate(200%) contrast(108%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) contrast(108%);
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Bottom Sheets (Queue, Profile, FileDetails, StorageManager, Trash) */
+.liquid-glass-sheet {
+  background: rgba(16, 16, 20, 0.86);
+  backdrop-filter: blur(40px) saturate(200%) contrast(108%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) contrast(108%);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-left: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-right: 0.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* Glass lite for sticky date headers and subtle floating chips */
+.liquid-glass-lite {
+  background: rgba(18, 18, 22, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.10);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
